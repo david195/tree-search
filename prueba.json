@@ -1,0 +1,21 @@
+{"nodes":[
+  {"id":1,"label":"a"},
+  {"id":2,"label":"b"},
+  {"id":3,"label":"c"},
+  {"id":4,"label":"d"},
+  {"id":5,"label":"e"},
+  {"id":6,"label":"f"},
+  {"id":7,"label":"g"},
+  {"id":8,"label":"h"}],
+"edges":[
+  {"from":1,"to":2,"label":"2"},
+  {"from":1,"to":3,"label":"4"},
+  {"from":2,"to":4,"label":"5"},
+  {"from":2,"to":5,"label":"4"},
+  {"from":3,"to":5,"label":"3"},
+  {"from":3,"to":6,"label":"8"},
+  {"from":4,"to":7,"label":"9"},
+  {"from":5,"to":6,"label":"2"},
+  {"from":6,"to":7,"label":"5"},
+  {"from":7,"to":8,"label":"2"}
+]}
