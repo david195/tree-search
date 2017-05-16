@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<!--
+Author: David Ruiz Garcia
+github-repository: https://github.com/david195/tree-search
+git-page: https://david195.github.io/tree-search/
+-->
+
+<html>
+<head>
+  <title>Tree-Search</title>
+  <meta name="author" content="David Ruiz">
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="js/ui.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/sim.js"></script>
+  <script src="js/lib/vis.min.js"></script>
+</head>
+
+<body onload="load()">
+<div id = 'layout'>
+  <div><span style="float:right">David Ruiz García<br><a href="doc/manual_usuario.pdf">ayuda</a></span>Métodos ciegos de búsqueda</div>
+  <hr>
+<div id="edit">
+  <button onclick="network.addNodeMode()">nuevo nodo</button>&nbsp<input type="text" requiered="true" id='nnode'><br>
+  <button onclick="network.addEdgeMode()">nueva arista</button>&nbsp<input id='edge_num' type="number" min="0" value="0"><br>
+  <button onclick="network.deleteSelected()">eliminar seleccion</button><br><br>
+  <label for="file">Leer archivo: </label><input id="file" type="file" onchange="load_file(this.files)"><br><br>
+  <button onclick="save_file()">guardar</button>&nbsp<input type="text" id="fname" requiered="true">&nbsp.json<br>
+<br><br>
+  <button id="binit" onclick="e_set('init')">init</button>
+  <button id="bend" onclick="e_set('end')">end</button><br><br>
+  <select id="opt">
+    <option value="profundidad">Preferente por profundidad</option>
+    <option value="proflim">Por profundidad limitada</option>
+    <option value="amplitud">Preferente por amplitud</option>
+    <option value="profI">Profundidad iterativa</option>
+    <option value="costo">Costo uniforme</option>
+  </select>&nbsp<input id='prof' type="number" min="0" value="0">
+  <br><br>
+  <button onclick="init()">Busqueda</button>
+  <div id="data"></div>
+</div>
+<div id='graf'>Modo Árbol:&nbsp &nbsp &nbsp&nbsp
+  <label class="switch">
+    <input type="checkbox" id="sGa" onchange="checkGa()">
+    <div class="slider round"></div>
+  </label>
+<div id="tree"></div> Simulación de recorrido&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <button id='pause' onclick="pause()">pausa</button>
+
+<div id="sim"></div>
+</div>
+</div>
+</body>
+</html>
