@@ -1,9 +1,10 @@
-button,input,select,#data{
+button,input,select,#help{
   font-family: monospace;
   font-size: 11px;
 }
 
 #data{
+  font-family: monospace;
   font-size: 14px;
 }
 
