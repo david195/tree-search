@@ -12,11 +12,14 @@ function search(ei,ef,tsearch,data,div){
   }
   if(tsearch == 'a*'){
     a(ei,ef,data,function(tree){
-      console.log(tree);
       tree.nodes = new vis.DataSet(tree.nodes);
       tree.edges = new vis.DataSet(tree.edges);
       var cont = document.createElement('div');
-      var options = {};
+      var options = {
+        layout:{
+          hierarchical: true
+        },
+      };
       div.appendChild(cont);
       var network = new vis.Network(cont, tree, options);
     });

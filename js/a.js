@@ -13,26 +13,27 @@ function a(ei,ef,data,callback){
   var n = {id:parseInt(ei.toString())+"0",node:ei,val:0,label:ei};
   while(n.node!=ef){
     var neighbors = get_neighbors(n,data.edges._data);
-    console.log(neighbors);
     if(neighbors.length !=0){
       for (var i=0;i<neighbors.length;i++){
         var nb = neighbors[i].node;
         if(!is_in(nb,nodes)){
           var v = neighbors[i].val+h[n.node];
           list.push({id:parseInt(nb.toString()+v.toString()),node:nb,val:v,label:nb});
+          var e = {from:parseInt(n.node.toString()+n.val.toString())};
+          e.to = parseInt(parseInt(nb.toString()+v.toString()));
+          e.label = v;
+          edges.push(e);
         }
       }
     }
     list.sort(compare);
     nodes.push(n);
-    var e = {from:parseInt(n.id.toString()+n.val.toString())};
     n = list.shift();
     if(n==null)
       break;
-    e.to = parseInt(n.id.toString()+n.val.toString());
-    e.label = n.val;
-    edges.push(e);
   }
+  nodes.push(n);
+  console.log(edges);
   type = "a*";
   callback({nodes:nodes,edges:edges});
 }
