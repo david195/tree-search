@@ -1,13 +1,29 @@
 /*search.js*/
 var lnodes,rnodes,limp,lastn;
 
-function search(ei,ef,tsearch,data){
+function search(ei,ef,tsearch,data,div){
   if(ei == null || ef == null){
     alert("Elige un nodo de inicion y un nodo meta");
     return;
   }
   if(tsearch == 'profI'){
     profI();
+    return;
+  }
+  if(tsearch == 'a*'){
+    a(ei,ef,data,function(tree){
+      console.log(tree);
+      tree.nodes = new vis.DataSet(tree.nodes);
+      tree.edges = new vis.DataSet(tree.edges);
+      var cont = document.createElement('div');
+      var options = {};
+      div.appendChild(cont);
+      var network = new vis.Network(cont, tree, options);
+    });
+    return;
+  }
+  if(tsearch == 'avida'){
+    avida(ei,ef,data);
     return;
   }
   lnodes = [];

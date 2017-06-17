@@ -11,9 +11,10 @@ git-page: https://david195.github.io/tree-search/
   <meta name="author" content="David Ruiz">
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="css/style.css">
-  <script src="js/ui.js"></script>
   <script src="js/search.js"></script>
   <script src="js/sim.js"></script>
+  <script src="js/a.js"></script>
+  <script src="js/ui.js"></script>
   <script src="js/lib/vis.min.js"></script>
 </head>
 
@@ -22,8 +23,9 @@ git-page: https://david195.github.io/tree-search/
   <div ><span id="help" style="float:right">David Ruiz García<br>git-hub: <a href="https://github.com/david195/tree-search/">david195</a><br><a href="doc/manual_usuario.pdf">ayuda</a></span>Métodos ciegos de búsqueda</div>
   <hr>
 <div id="edit">
-  <button onclick="network.addNodeMode()">nuevo nodo</button>&nbsp<input type="text" requiered="true" id='nnode'><br>
-  <button onclick="network.addEdgeMode()">nueva arista</button>&nbsp<input id='edge_num' type="number" min="0" value="0"><br>
+  <button onclick="network.addNodeMode()">nuevo nodo</button><br>
+  <button onclick="network.addEdgeMode()">nueva arista</button><br>
+
   <button onclick="network.deleteSelected()">eliminar seleccion</button><br><br>
   <label for="file">Leer archivo: </label><input id="file" type="file" onchange="load_file(this.files)"><br><br>
   <button onclick="save_file()">guardar</button>&nbsp<input type="text" id="fname" requiered="true">&nbsp.json<br>
@@ -31,12 +33,14 @@ git-page: https://david195.github.io/tree-search/
   <button id="binit" onclick="e_set('init')">init</button>
   <button id="bend" onclick="e_set('end')">end</button><br><br>
   <select id="opt">
-    <option value="profundidad">Preferente por profundidad</option>
+    <option value="a*">Busqueda A*</option>
+    <option value="avida">Busqueda Avida</option>
+    <!--<option value="profundidad">Preferente por profundidad</option>
     <option value="proflim">Por profundidad limitada</option>
     <option value="amplitud">Preferente por amplitud</option>
     <option value="profI">Profundidad iterativa</option>
-    <option value="costo">Costo uniforme</option>
-  </select>&nbsp<input id='prof' type="number" min="0" value="0">
+    <option value="costo">Costo uniforme</option>-->
+  </select>
   <br><br>
   <button onclick="init()">Busqueda</button>
   <div id="data"></div>

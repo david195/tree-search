@@ -51,6 +51,14 @@ function tree(data,container){
     edges: data.edges
   };
   var options = {
+    interaction:{
+      dragNodes:false,
+      dragView:false,
+      hoverConnectedEdges:false
+    },
+    physics:{
+      enabled:false
+    },
     layout:{
       randomSeed: .5,
       hierarchical: gerarquia
@@ -61,22 +69,22 @@ function tree(data,container){
     manipulation: {
       enabled: false,
       addNode: function(nodeData,callback) {
-        nodeData.label = document.getElementById('nnode').value;
+        nodeData.label = nn
         nodeData.id = nn;
         nn++;
         data.nodes.add(nodeData);
         callback(nodeData);
       },
       addEdge: function(edgeData,callback) {
-        //if(opt=="costo"){
-          edgeData.label = document.getElementById('edge_num').value;
-        //}
+        var p1 = dat.nodes._data[edgeData.from];
+        var p2 = dat.nodes._data[edgeData.to];
+        edgeData.label = distance(p1,p2).toString();
         data.edges.add(edgeData);
         callback(edgeData);
       }
     }
   };
-  nn = data.nodes.length+1;
+  nn = data.nodes.length;
   var nw = new vis.Network(container, dat, options);
   return nw;
 }
@@ -94,7 +102,7 @@ function e_set(t){
 
 function init(){
   opt = document.getElementById('opt').options[document.getElementById('opt').selectedIndex].value;
-  search(e_init,e_end,opt,data);
+  search(e_init,e_end,opt,data,document.getElementById('tree'));
 }
 
 function descargarArchivo(contenidoEnBlob, nombreArchivo) {
@@ -133,6 +141,8 @@ function save_file(){
     var n = {};
     n.id = data.nodes._data[id].id;
     n.label = data.nodes._data[id].label;
+    n.x = data.nodes._data[id].x;
+    n.y = data.nodes._data[id].y;
     nodes.push(n);
   }
   var d = {
@@ -157,4 +167,8 @@ function pause(){
   else
     document.getElementById('pause').innerHTML = 'reanudar';
   pausa = !pausa;
+}
+
+function distance(p1,p2){
+  return Math.round(Math.sqrt(Math.pow(p2.x-p1.x,2)+Math.pow(p2.y-p1.y,2)));
 }
