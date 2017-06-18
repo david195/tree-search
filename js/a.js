@@ -1,7 +1,7 @@
 var type="a*";
 
-function avida(ei,ef,data){
-  a(ei,ef,data);
+function avida(ei,ef,data,callback){
+  a(ei,ef,data,callback);
   type = "avida";
 }
 
@@ -17,7 +17,9 @@ function a(ei,ef,data,callback){
       for (var i=0;i<neighbors.length;i++){
         var nb = neighbors[i].node;
         if(!is_in(nb,nodes)){
-          var v = neighbors[i].val+h[n.node]-h[i];
+          var v = h[n.node];
+          if(type=='a*')
+            v += neighbors[i].val-h[i];
           list.push({id:nb.toString()+"-"+v.toString(),node:nb,val:v,label:nb,level:n.level+1});
           var e = {from:n.id.toString()};
           e.to = nb.toString()+"-"+v.toString();

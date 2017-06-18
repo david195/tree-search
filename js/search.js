@@ -10,39 +10,20 @@ function search(ei,ef,tsearch,data,div){
     profI();
     return;
   }
+  var title = document.createTextNode("Busqueda "+tsearch);
+  div.appendChild(title);
+
   if(tsearch == 'a*'){
     a(ei,ef,data,function(sol,cost,tree){
-      for (var i = 0; i < sol.length; i++) {
-        for(var j=0; j<tree.nodes.length;j++){
-          if(tree.nodes[j].id ==sol[i])
-            tree.nodes[j].group = 'sol';
-        }
-      }
-      /****/
-      tree.nodes = new vis.DataSet(tree.nodes);
-      tree.edges = new vis.DataSet(tree.edges);
-      var cont = document.createElement('div');
-      cont.style.height = '300px';
-      var options = {
-        layout:{
-          hierarchical: {
-            enabled : true
-          }
-        },
-        groups:{init:{color:{background:'yellow'}},
-        end:{color:{background:'green'}},
-        sol:{color:{background:'red'}}
-        }
-      };
-      div.appendChild(cont);
-      var network = new vis.Network(cont, tree, options);
-      console.log(sol);
-      console.log(cost);
+      draw_graph(sol,cost,tree,div);
     });
     return;
   }
+
   if(tsearch == 'avida'){
-    avida(ei,ef,data);
+    avida(ei,ef,data,function(sol,cost,tree){
+      draw_graph(sol,cost,tree,div);
+    });
     return;
   }
   lnodes = [];
@@ -104,6 +85,33 @@ function profI(){
   li = document.getElementById('prof').value;
   document.getElementById('prof').value=0;
   search(e_init,e_end,'proflim',data);
+}
+
+function draw_graph(sol,cost,tree,div){
+  for (var i = 0; i < sol.length; i++) {
+    for(var j=0; j<tree.nodes.length;j++){
+      if(tree.nodes[j].id ==sol[i])
+        tree.nodes[j].color = 'red';
+    }
+  }
+  /****/
+  tree.nodes = new vis.DataSet(tree.nodes);
+  tree.edges = new vis.DataSet(tree.edges);
+  var cont = document.createElement('div');
+  cont.style.height = '300px';
+  var options = {
+    layout:{
+      hierarchical: {
+        enabled : true
+      }
+    },
+    groups:{init:{color:{background:'yellow'}},
+    end:{color:{background:'green'}},
+    sol:{color:{background:'red'}}
+    }
+  };
+  div.appendChild(cont);
+  var network = new vis.Network(cont, tree, options);
 }
 
 function costo(ef){

@@ -46,9 +46,16 @@ function tree(data,container){
       }
     }
   }*/
+  for(var i=0;i<data.nodes._data.length;i++){
+    data.nodes._data[i].color = null;
+  }
+  if(e_init!=null)
+    data.nodes._data[e_init].color = 'red';
+  if(e_end!=null)
+    data.nodes._data[e_end].color = 'green';
   var dat = {
-    nodes: data.nodes,
-    edges: data.edges
+  nodes: data.nodes,
+  edges: data.edges
   };
   var options = {
     interaction:{
@@ -62,9 +69,6 @@ function tree(data,container){
     layout:{
       randomSeed: .5,
       hierarchical: gerarquia
-    },
-    groups:{init:{color:{background:'red'}},
-            end:{color:{background:'green'}},
     },
     manipulation: {
       enabled: false,
@@ -84,7 +88,6 @@ function tree(data,container){
       }
     }
   };
-  nn = data.nodes.length;
   var nw = new vis.Network(container, dat, options);
   return nw;
 }
