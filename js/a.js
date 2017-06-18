@@ -10,32 +10,45 @@ function a(ei,ef,data,callback){
   var nodes = [];
   var edges = [];
   var list = [];
-  var n = {id:parseInt(ei.toString())+"0",node:ei,val:0,label:ei};
+  var n = {id:ei.toString()+"-"+h[ei],node:ei,val:h[ei],label:ei,level:0};
   while(n.node!=ef){
     var neighbors = get_neighbors(n,data.edges._data);
     if(neighbors.length !=0){
       for (var i=0;i<neighbors.length;i++){
         var nb = neighbors[i].node;
         if(!is_in(nb,nodes)){
-          var v = neighbors[i].val+h[n.node];
-          list.push({id:parseInt(nb.toString()+v.toString()),node:nb,val:v,label:nb});
-          var e = {from:parseInt(n.node.toString()+n.val.toString())};
-          e.to = parseInt(parseInt(nb.toString()+v.toString()));
-          e.label = v;
+          var v = neighbors[i].val+h[n.node]-h[i];
+          list.push({id:nb.toString()+"-"+v.toString(),node:nb,val:v,label:nb,level:n.level+1});
+          var e = {from:n.id.toString()};
+          e.to = nb.toString()+"-"+v.toString();
+          e.label = neighbors[i].val-n.val;
           edges.push(e);
         }
       }
     }
-    list.sort(compare);
     nodes.push(n);
+    list.sort(compare);
     n = list.shift();
     if(n==null)
       break;
   }
   nodes.push(n);
-  console.log(edges);
+  var route=[];
+  var cost = 0;
+  var nn = nodes[nodes.length-1].id;
+  while(nn!=nodes[0].id){
+    route.push(nn);
+    for(var i=0;i<edges.length;i++){
+      if(edges[i].to == nn){
+        route.push(nn);
+        cost+= parseInt(edges[i].label);
+        nn=edges[i].from;
+      }
+    }
+  }
+  route.push(nn);
   type = "a*";
-  callback({nodes:nodes,edges:edges});
+  callback(route,cost,{nodes:nodes,edges:edges});
 }
 
 /***functions***/
@@ -61,17 +74,16 @@ function get_neighbors(n,edges){
     if(edges[i].from == n.node){
       nn.label = edges[i].to;
       nn.node = edges[i].to;
-      nn.id = parseInt(edges[i].to.toString()+nn.val.toString());
+      nn.id = edges[i].to.toString()+"-"+nn.val.toString();
       nb.push(nn);
     }
     if(edges[i].to == n.node){
       nn.label = edges[i].from;
       nn.node = edges[i].from;
-      nn.id = parseInt(edges[i].from.toString()+nn.val.toString());
+      nn.id = edges[i].from.toString()+"-"+nn.val.toString();
       nb.push(nn);
     }
   }
-  console.log(nb);
   return nb;
 }
 

@@ -30,7 +30,7 @@ function load_file(arg) {
 }
 
 function tree(data,container){
-  if(e_init!=null || e_end!=null && e_init!=e_end){
+  /*if(e_init!=null || e_end!=null && e_init!=e_end){
     for (var id in data.nodes._data) {
       if (data.nodes._data.hasOwnProperty(id)) {
         if(data.nodes._data[id].id==e_init){
@@ -45,7 +45,7 @@ function tree(data,container){
         }
       }
     }
-  }
+  }*/
   var dat = {
     nodes: data.nodes,
     edges: data.edges
@@ -64,7 +64,7 @@ function tree(data,container){
       hierarchical: gerarquia
     },
     groups:{init:{color:{background:'red'}},
-            end:{color:{background:'green'}}
+            end:{color:{background:'green'}},
     },
     manipulation: {
       enabled: false,

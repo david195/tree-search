@@ -11,17 +11,33 @@ function search(ei,ef,tsearch,data,div){
     return;
   }
   if(tsearch == 'a*'){
-    a(ei,ef,data,function(tree){
+    a(ei,ef,data,function(sol,cost,tree){
+      for (var i = 0; i < sol.length; i++) {
+        for(var j=0; j<tree.nodes.length;j++){
+          if(tree.nodes[j].id ==sol[i])
+            tree.nodes[j].group = 'sol';
+        }
+      }
+      /****/
       tree.nodes = new vis.DataSet(tree.nodes);
       tree.edges = new vis.DataSet(tree.edges);
       var cont = document.createElement('div');
+      cont.style.height = '300px';
       var options = {
         layout:{
-          hierarchical: true
+          hierarchical: {
+            enabled : true
+          }
         },
+        groups:{init:{color:{background:'yellow'}},
+        end:{color:{background:'green'}},
+        sol:{color:{background:'red'}}
+        }
       };
       div.appendChild(cont);
       var network = new vis.Network(cont, tree, options);
+      console.log(sol);
+      console.log(cost);
     });
     return;
   }
