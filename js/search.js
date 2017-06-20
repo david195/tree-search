@@ -11,19 +11,19 @@ function search(ei,ef,tsearch,data,div){
     return;
   }
   var title = document.createTextNode("Busqueda "+tsearch);
-  div.appendChild(title);
-
   if(tsearch == 'a*'){
-    a(ei,ef,data,function(sol,cost,tree){
-      draw_graph(sol,cost,tree,div);
+    a(ei,ef,data,function(sol){
+      draw_graph(sol.route,sol.tree,div);
     });
+    div.prepend(title);
     return;
   }
 
   if(tsearch == 'avida'){
     avida(ei,ef,data,function(sol,cost,tree){
-      draw_graph(sol,cost,tree,div);
+      draw_graph(sol.route,sol.tree,div);
     });
+    div.prepend(title);
     return;
   }
   lnodes = [];
@@ -87,7 +87,7 @@ function profI(){
   search(e_init,e_end,'proflim',data);
 }
 
-function draw_graph(sol,cost,tree,div){
+function draw_graph(sol,tree,div){
   for (var i = 0; i < sol.length; i++) {
     for(var j=0; j<tree.nodes.length;j++){
       if(tree.nodes[j].id ==sol[i])
@@ -97,21 +97,14 @@ function draw_graph(sol,cost,tree,div){
   /****/
   tree.nodes = new vis.DataSet(tree.nodes);
   tree.edges = new vis.DataSet(tree.edges);
-  var cont = document.createElement('div');
-  cont.style.height = '300px';
   var options = {
     layout:{
       hierarchical: {
         enabled : true
       }
     },
-    groups:{init:{color:{background:'yellow'}},
-    end:{color:{background:'green'}},
-    sol:{color:{background:'red'}}
-    }
   };
-  div.appendChild(cont);
-  var network = new vis.Network(cont, tree, options);
+  var network = new vis.Network(div, tree, options);
 }
 
 function costo(ef){

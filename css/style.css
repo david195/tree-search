@@ -3,15 +3,20 @@ button,input,select,#help{
   font-size: 11px;
 }
 
+button{
+  width: 100px;
+}
+
 #data{
   font-family: monospace;
   font-size: 14px;
 }
 
-#tree{
+#tree,#sol{
   width: 500px;
   height: 300px;
   margin-top: 10px;
+  border-style: double;
 }
 
 #sim{

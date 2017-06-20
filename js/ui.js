@@ -105,7 +105,7 @@ function e_set(t){
 
 function init(){
   opt = document.getElementById('opt').options[document.getElementById('opt').selectedIndex].value;
-  search(e_init,e_end,opt,data,document.getElementById('tree'));
+  search(e_init,e_end,opt,data,document.getElementById('sol'));
 }
 
 function descargarArchivo(contenidoEnBlob, nombreArchivo) {

@@ -1,8 +1,8 @@
 var type="a*";
 
 function avida(ei,ef,data,callback){
-  a(ei,ef,data,callback);
   type = "avida";
+  a(ei,ef,data,callback);
 }
 
 function a(ei,ef,data,callback){
@@ -10,6 +10,7 @@ function a(ei,ef,data,callback){
   var nodes = [];
   var edges = [];
   var list = [];
+  var np;
   var n = {id:ei.toString()+"-"+h[ei],node:ei,val:h[ei],label:ei,level:0};
   while(n.node!=ef){
     var neighbors = get_neighbors(n,data.edges._data);
@@ -19,17 +20,23 @@ function a(ei,ef,data,callback){
         if(!is_in(nb,nodes)){
           var v = h[n.node];
           if(type=='a*')
-            v += neighbors[i].val-h[i];
+            v += neighbors[i].val-h[n.node];
           list.push({id:nb.toString()+"-"+v.toString(),node:nb,val:v,label:nb,level:n.level+1});
           var e = {from:n.id.toString()};
           e.to = nb.toString()+"-"+v.toString();
-          e.label = neighbors[i].val-n.val;
+          if(type=='a*')
+            e.label = neighbors[i].val-n.val;
+          else {
+            e.label = neighbors[i].val;
+          }
           edges.push(e);
+
         }
       }
     }
     nodes.push(n);
     list.sort(compare);
+    np++;
     n = list.shift();
     if(n==null)
       break;
@@ -50,7 +57,8 @@ function a(ei,ef,data,callback){
   }
   route.push(nn);
   type = "a*";
-  callback(route,cost,{nodes:nodes,edges:edges});
+  var sol = {route:route,cost:cost,np:np,tree:{nodes:nodes,edges:edges}};
+  callback(sol);
 }
 
 /***functions***/
